@@ -3,7 +3,8 @@
 #include <QSettings>
 #include <QFileDialog>
 #include <QTreeWidgetItem>
-#include <QSettings>
+
+#include "Settings.h"
 
 InputWidget::InputWidget(QWidget* parent)
    : QWidget(parent)
@@ -42,19 +43,19 @@ InputWidget::InputWidget(QWidget* parent)
 
 void InputWidget::load()
 {
-   QSettings settings;
+   Settings settings;
 
-   search = settings.value("search").toString();
+   search = settings.string("search");
    searchEdit->setText(search);
 
-   replace = settings.value("replace").toString();
+   replace = settings.string("replace");
    replaceEdit->setText(replace);
 
-   const QStringList dirList = settings.value("directories").toStringList();
+   const QStringList& dirList = settings.stringList("directories");
    for(const QString& directory : dirList)
-       addDirectory(directory, true);
+      addDirectory(directory, true);
 
-   replaceInFiles = settings.value("replaceInFiles").toBool();
+   replaceInFiles = settings.boolean("replaceInFiles");
    replaceInFilesCheck->setChecked(replaceInFiles ? Qt::Checked : Qt::Unchecked);
 
    updatePreview();
@@ -62,12 +63,12 @@ void InputWidget::load()
 
 void InputWidget::save()
 {
-   QSettings settings;
+   Settings settings;
 
-   settings.setValue("search", search);
-   settings.setValue("replace", replace);
-   settings.setValue("directories", directoryList);
-   settings.setValue("replaceInFiles", replaceInFiles);
+   settings.write("search", search);
+   settings.write("replace", replace);
+   settings.write("directories", directoryList);
+   settings.write("replaceInFiles", replaceInFiles);
 }
 
 SearchDrop::Data InputWidget::getSearchData() const

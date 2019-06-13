@@ -1,9 +1,9 @@
 #include "MainWidget.h"
 
 #include <QApplication>
-
-#include <QSettings>
 #include <QTimer>
+
+#include "Settings.h"
 
 MainWidget::MainWidget(QWidget* parent)
    : QWidget(parent)
@@ -16,9 +16,9 @@ MainWidget::MainWidget(QWidget* parent)
    connect(inputWidget, &InputWidget::inputChanged, previewWidget, &PreviewWidget::updatePreview);
    connect(inputWidget, &InputWidget::executeRename, previewWidget, &PreviewWidget::executeRename);
 
-   QSettings qtsettings;
-   restoreGeometry(qtsettings.value("geometry").toByteArray());
-   splitter->restoreState(qtsettings.value("splitter").toByteArray());
+   Settings settings;
+   restoreGeometry(settings.bytes("geometry"));
+   splitter->restoreState(settings.bytes("splitter"));
 }
 
 void MainWidget::delayLoad()
@@ -34,9 +34,9 @@ void MainWidget::showEvent(QShowEvent* se)
 
 void MainWidget::closeEvent(QCloseEvent* ce)
 {
-   QSettings qtsettings;
-   qtsettings.setValue("geometry", saveGeometry());
-   qtsettings.setValue("splitter", splitter->saveState());
+   Settings settings;
+   settings.write("geometry", saveGeometry());
+   settings.write("splitter", splitter->saveState());
 
    inputWidget->save();
 

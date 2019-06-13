@@ -39,7 +39,8 @@ HEADERS += \
     MainWidget.h \
     PreviewWidget.h \
     RenameModel.h \
-    SearchDrop.h
+    SearchDrop.h \
+    Settings.h
 
 SOURCES += \
     FolderTree.cpp \
@@ -48,7 +49,8 @@ SOURCES += \
     MainWidget.cpp \
     PreviewWidget.cpp \
     RenameModel.cpp \
-    SearchDrop.cpp
+    SearchDrop.cpp \
+    Settings.cpp
 
 FORMS += \
     InputWidget.ui \
