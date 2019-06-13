@@ -38,5 +38,6 @@ void FolderTree::dropEvent(QDropEvent* de)
       hasUpdate = true;
    }
 
-   emit addDirectory(QString(), false);
+   if(hasUpdate)
+      emit addDirectory(QString(), false);
 }

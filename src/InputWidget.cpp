@@ -56,7 +56,7 @@ void InputWidget::load()
       addDirectory(directory, true);
 
    replaceInFiles = settings.boolean("replaceInFiles");
-   replaceInFilesCheck->setChecked(replaceInFiles ? Qt::Checked : Qt::Unchecked);
+   replaceInFilesCheck->setChecked(replaceInFiles);
 
    updatePreview();
 }
@@ -116,11 +116,10 @@ void InputWidget::update(const SearchDrop::Data& data)
 
 void InputWidget::replaceInFilesChanged()
 {
-  const bool replaceInFilesTest = (replaceInFilesCheck->checkState() == Qt::Checked);
-   if(replaceInFilesTest == replaceInFiles)
-       return;
+   if(replaceInFilesCheck->isChecked() == replaceInFiles)
+      return;
 
-   replaceInFiles = replaceInFilesTest;
+   replaceInFiles = replaceInFilesCheck->isChecked();
    updatePreview();
 }
 
