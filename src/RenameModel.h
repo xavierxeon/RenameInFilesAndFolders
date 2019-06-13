@@ -1,13 +1,15 @@
 #ifndef RenameModelH
 #define RenameModelH
 
-#include <QStandardItemModel>
+#include <QSortFilterProxyModel >
 
-class RenameModel : public QStandardItemModel
+#include "FileSystemModel.h"
+
+class RenameModel : public QSortFilterProxyModel
 {
    Q_OBJECT
 public:
-   RenameModel(QObject* parent);
+   RenameModel(FileSystemModel* model);
 signals:
    void progressUpdate(int value, int max);
 private:
@@ -22,12 +24,10 @@ private:
    void traverseChildrenAndRenameItem(QStandardItem* item, QStandardItem* parent, int row);
    void replaceTextInFile(const QString& fileName) const;
 private:
+   FileSystemModel* model;
    QString search;
-   QString replace;
-   QStringList directoryList;
+   QString replace;   
    bool replaceInFiles;
-   QIcon fileIcon;
-   QIcon folderIcon;
 };
 
 #endif // RenameModelH

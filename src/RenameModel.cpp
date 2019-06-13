@@ -4,20 +4,20 @@
 #include <QFileInfo>
 #include <QDir>
 
-RenameModel::RenameModel(QObject* parent)
-   : QStandardItemModel(parent)
+
+RenameModel::RenameModel(FileSystemModel* model)
+   : QSortFilterProxyModel(model)
+   , model()
    , search()
    , replace()
-   , directoryList()
    , replaceInFiles(false)
-   , fileIcon(":/File.svg")
-   , folderIcon(":/Folder.svg")
 {
-   setHorizontalHeaderLabels( {"old name", "new name", "# in file"} );
+   setSourceModel(model);
 }
 
 void RenameModel::update()
 {
+   /*
    clear();
    setHorizontalHeaderLabels( {"old name", "new name", "# in file"} );
 
@@ -33,10 +33,12 @@ void RenameModel::update()
    removeUnchangedItems();
 
    emit progressUpdate(-1, 0);
+   */
 }
 
 void RenameModel::execute()
 {
+   /*
    int topLevelItemCount = invisibleRootItem()->rowCount();
    emit progressUpdate(0, topLevelItemCount);
 
@@ -47,10 +49,12 @@ void RenameModel::execute()
       emit progressUpdate(row, topLevelItemCount);
    }
    update();
+   */
 }
 
 void RenameModel::parseRecursive(const QString& dirPath, QStandardItem* parent)
 {
+   /*
    QDir dir(dirPath);
    dir.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
    dir.setSorting(QDir::Name);
@@ -105,8 +109,8 @@ void RenameModel::parseRecursive(const QString& dirPath, QStandardItem* parent)
          item->setEnabled(willChange);
          item->setEditable(false);
       }
-
    }
+   */
 }
 
 int RenameModel::countChangesInFile(const QString& fileName) const
@@ -131,6 +135,7 @@ int RenameModel::countChangesInFile(const QString& fileName) const
 
 void RenameModel::removeUnchangedItems()
 {
+   /*
    QList<int> removeList;
    int topLevelItemCount = invisibleRootItem()->rowCount();
 
@@ -143,6 +148,7 @@ void RenameModel::removeUnchangedItems()
 
    for(int row : removeList)
        invisibleRootItem()->removeRow(row);
+   */
 }
 
 bool RenameModel::itemIsEnbaledOrHasEnabledChildren(QStandardItem* item) const

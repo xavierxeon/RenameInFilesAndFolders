@@ -33,6 +33,7 @@ CONFIG(release, debug|release) {
 }
 
 HEADERS += \
+    FileSystemModel.h \
     FolderTree.h \
     InputWidget.h \
     LogoWidget.h \
@@ -43,6 +44,7 @@ HEADERS += \
     Settings.h
 
 SOURCES += \
+    FileSystemModel.cpp \
     FolderTree.cpp \
     InputWidget.cpp \
     LogoWidget.cpp \

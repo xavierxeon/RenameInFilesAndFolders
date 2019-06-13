@@ -4,14 +4,19 @@
 
 PreviewWidget::PreviewWidget(QWidget* parent)
     : QWidget(parent)
+    , fileSystemModel(nullptr)
     , renameModel(nullptr)
     , busyIndex(0)
+    , lastProgress(QDateTime::currentDateTime())
 {
    setupUi(this);
 
-   renameModel = new RenameModel(this);
+   fileSystemModel = new FileSystemModel(this);
+   renameModel = new RenameModel(fileSystemModel);
+
    previewTree->setModel(renameModel);
 
+   connect(fileSystemModel, &FileSystemModel::progressUpdate, this, &PreviewWidget::updateProgress);
    connect(renameModel, &RenameModel::progressUpdate, this, &PreviewWidget::updateProgress);
 }
 
@@ -23,6 +28,8 @@ void PreviewWidget::updatePreview(const QString& search
    previewTree->setEnabled(false);
    QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
+   fileSystemModel->update(directoryList);
+
    bool updateNeeded = false;
 
    if(renameModel->search != search)
@@ -33,11 +40,6 @@ void PreviewWidget::updatePreview(const QString& search
    if(renameModel->replace != replace)
    {
       renameModel->replace = replace;
-      updateNeeded = true;
-   }
-   if(renameModel->directoryList != directoryList)
-   {
-      renameModel->directoryList = directoryList;
       updateNeeded = true;
    }
    if(renameModel->replaceInFiles != replaceInFiles)
@@ -69,6 +71,13 @@ void PreviewWidget::updateProgress(int value, int max)
    }
    else
    {
+      QDateTime now = QDateTime::currentDateTime();
+      qint64 timePassed = lastProgress.secsTo(now);
+      if(timePassed < 2)
+         return;
+
+      lastProgress = now;
+
       if(0 == max && 0 == value)
       {
          value = ++busyIndex;

@@ -4,6 +4,9 @@
 #include <QWidget>
 #include "ui_PreviewWidget.h"
 
+#include <QDateTime>
+
+#include "FileSystemModel.h"
 #include "RenameModel.h"
 
 class PreviewWidget : public QWidget, private Ui::PreviewWidget
@@ -20,8 +23,10 @@ public slots:
 private slots:
    void updateProgress(int value, int max);
 private:
+   FileSystemModel* fileSystemModel;
    RenameModel* renameModel;
    int busyIndex;
+   QDateTime lastProgress;
 };
 
 #endif // PreviewWidgetH
