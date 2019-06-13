@@ -1,0 +1,7 @@
+/.vscode
+/windows
+/linux
+/macos
+
+**/*.pro.user
+**/build-*

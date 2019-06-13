@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Add.svg</file>
+        <file>BulkRenamer.svg</file>
+        <file>File.svg</file>
+        <file>Folder.svg</file>
+        <file>Remove.svg</file>
+        <file>Drop.svg</file>
+    </qresource>
+</RCC>
