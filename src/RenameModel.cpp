@@ -167,7 +167,7 @@ void RenameModel::traverseChildrenAndRenameItem(QStandardItem* item, QStandardIt
        QStandardItem* childItem = item->child(childRow);
        traverseChildrenAndRenameItem(childItem, item, childRow);
    }
-   if(item->isEnabled())
+   if(!item->isEnabled())
        return;
 
    emit progressUpdate(0, 0);
@@ -188,7 +188,9 @@ void RenameModel::traverseChildrenAndRenameItem(QStandardItem* item, QStandardIt
    {
       QString newPath = path;
       newPath.replace(oldName, newName);
-      QFile::rename(path, newPath);
+      bool ok = QFile::rename(path, newPath);
+      if(!ok)
+         qDebug() << "unable to rename" << path << newPath;
    }
 }
 
