@@ -1,7 +1,7 @@
 #ifndef RenameModelH
 #define RenameModelH
 
-#include <QSortFilterProxyModel >
+#include <QSortFilterProxyModel>
 
 #include "FileSystemModel.h"
 

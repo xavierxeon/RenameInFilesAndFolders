@@ -54,6 +54,8 @@ void RenameModel::execute()
 
 void RenameModel::parseRecursive(const QString& dirPath, QStandardItem* parent)
 {
+   Q_UNUSED(dirPath);
+   Q_UNUSED(parent);
    /*
    QDir dir(dirPath);
    dir.setFilter(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
