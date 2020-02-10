@@ -2,6 +2,7 @@
 
 #include <QMimeData>
 #include <QFileInfo>
+#include <QDragEnterEvent>
 
 FolderTree::FolderTree(QWidget* parent)
     : QTreeWidget(parent)

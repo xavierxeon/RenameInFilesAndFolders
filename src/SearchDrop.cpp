@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QFile>
 #include <QTemporaryDir>
+#include <QMouseEvent>
 
 #include "InputWidget.h"
 
