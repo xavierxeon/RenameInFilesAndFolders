@@ -6,18 +6,18 @@ QT += widgets svg
 CONFIG += c++14
 
 win32{
-   DESTDIR = ../windows
+   DESTDIR = $$PWD/../windows
    RC_ICONS = AppIcon/RenameInFilesAndFolders.ico
 }
 
 macx{
-   DESTDIR = ../macos
+   DESTDIR = $$PWD/../macos
    ICON = AppIcon/RenameInFilesAndFolders.icns
    QMAKE_CXXFLAGS += -Werror
 }
 
 linux{
-   DESTDIR = ../linux
+   DESTDIR = $$PWD/../linux
    QMAKE_CXXFLAGS += -Werror
 }
 
