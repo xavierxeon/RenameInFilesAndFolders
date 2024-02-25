@@ -11,9 +11,12 @@ win32{
 }
 
 macx{
-   DESTDIR = ../macos
    ICON = AppIcon/RenameInFilesAndFolders.icns
    QMAKE_CXXFLAGS += -Werror
+
+    QMAKE_APPLE_DEVICE_ARCHS = $$QMAKE_HOST.arch # do not build universal binaries
+    CONFIG(debug, debug|release): DESTDIR = ../macos
+    CONFIG(release, debug|release): DESTDIR = ~/Applications
 }
 
 linux{
