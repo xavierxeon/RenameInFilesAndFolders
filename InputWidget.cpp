@@ -1,7 +1,7 @@
 #include "InputWidget.h"
 
-#include <QSettings>
 #include <QFileDialog>
+#include <QSettings>
 #include <QTreeWidgetItem>
 
 #include "Settings.h"
@@ -39,6 +39,9 @@ InputWidget::InputWidget(QWidget* parent)
 
    connect(replaceInFilesCheck, &QCheckBox::clicked, this, &InputWidget::replaceInFilesChanged);
    connect(executeButton, &QPushButton::clicked, this, &InputWidget::executeRename);
+
+   QIcon icon = QIcon(":/BulkRenamer.svg");
+   logo->setPixmap(icon.pixmap(256, 256));
 }
 
 void InputWidget::load()
@@ -52,7 +55,7 @@ void InputWidget::load()
    replaceEdit->setText(replace);
 
    const QStringList& dirList = settings.stringList("directories");
-   for(const QString& directory : dirList)
+   for (const QString& directory : dirList)
       addDirectory(directory, true);
 
    replaceInFiles = settings.boolean("replaceInFiles");
@@ -73,13 +76,13 @@ void InputWidget::save()
 
 SearchDrop::Data InputWidget::getSearchData() const
 {
-   return { search, replace };
+   return {search, replace};
 }
 
 void InputWidget::searchChanged()
 {
-   if(searchEdit->text() == search)
-       return;
+   if (searchEdit->text() == search)
+      return;
 
    search = searchEdit->text();
    updatePreview();
@@ -87,8 +90,8 @@ void InputWidget::searchChanged()
 
 void InputWidget::replaceChanged()
 {
-   if(replaceEdit->text() == replace)
-       return;
+   if (replaceEdit->text() == replace)
+      return;
 
    replace = replaceEdit->text();
    updatePreview();
@@ -97,26 +100,26 @@ void InputWidget::replaceChanged()
 void InputWidget::update(const SearchDrop::Data& data)
 {
    bool hasChanged = false;
-   if(data.search != search)
+   if (data.search != search)
    {
       search = data.search;
       searchEdit->setText(search);
       hasChanged = true;
    }
-   if(data.replace != replace)
+   if (data.replace != replace)
    {
       replace = data.replace;
       replaceEdit->setText(replace);
       hasChanged = true;
    }
 
-   if(hasChanged)
+   if (hasChanged)
       updatePreview();
 }
 
 void InputWidget::replaceInFilesChanged()
 {
-   if(replaceInFilesCheck->isChecked() == replaceInFiles)
+   if (replaceInFilesCheck->isChecked() == replaceInFiles)
       return;
 
    replaceInFiles = replaceInFilesCheck->isChecked();
@@ -126,18 +129,18 @@ void InputWidget::replaceInFilesChanged()
 void InputWidget::addDirectoryViaDialog()
 {
    const QString directory = QFileDialog::getExistingDirectory(this, "Choose folder");
-   if(directory.isEmpty()) // user has pressed cancel on dialog
-       return;
+   if (directory.isEmpty()) // user has pressed cancel on dialog
+      return;
 
    addDirectory(directory);
 }
 
 void InputWidget::addDirectory(const QString& directory, bool supressUpdate)
 {
-   if(directoryList.contains(directory ))
-       return;
+   if (directoryList.contains(directory))
+      return;
 
-   if(!directory.isEmpty())
+   if (!directory.isEmpty())
    {
       directoryList.append(directory);
       directoryList.sort();
@@ -145,23 +148,23 @@ void InputWidget::addDirectory(const QString& directory, bool supressUpdate)
 
    directoryTree->clear();
 
-   for(const QString& directory : directoryList)
+   for (const QString& directory : directoryList)
    {
-       QTreeWidgetItem* item = new QTreeWidgetItem(directoryTree);
-       item->setText(0, directory);
+      QTreeWidgetItem* item = new QTreeWidgetItem(directoryTree);
+      item->setText(0, directory);
    }
 
-   if(!supressUpdate)
-       updatePreview();
+   if (!supressUpdate)
+      updatePreview();
 }
 void InputWidget::removeDirectory()
 {
    QTreeWidgetItem* item = directoryTree->currentItem();
-   if(!item)
+   if (!item)
       return;
 
    const QString& path = item->text(0);
-   if(!directoryList.contains(path))
+   if (!directoryList.contains(path))
       return;
 
    const int index = directoryTree->indexOfTopLevelItem(item);

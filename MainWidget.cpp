@@ -7,14 +7,26 @@
 
 MainWidget::MainWidget(QWidget* parent)
    : QWidget(parent)
+   , splitter(nullptr)
+   , inputWidget(nullptr)
+   , previewWidget(nullptr)
 {
-   setupUi(this);
+   inputWidget = new InputWidget(this);
+   previewWidget = new PreviewWidget(this);
 
    QIcon icon(":/BulkRenamer.svg");
    setWindowIcon(icon);
 
    connect(inputWidget, &InputWidget::inputChanged, previewWidget, &PreviewWidget::updatePreview);
    connect(inputWidget, &InputWidget::executeRename, previewWidget, &PreviewWidget::executeRename);
+
+   QSplitter* splitter = new QSplitter(this);
+   splitter->addWidget(inputWidget);
+   splitter->addWidget(previewWidget);
+
+   QVBoxLayout* masterLayout = new QVBoxLayout(this);
+   masterLayout->setContentsMargins(0, 0, 0, 0);
+   masterLayout->addWidget(splitter);
 
    Settings settings;
    restoreGeometry(settings.bytes("geometry"));
@@ -49,8 +61,8 @@ int main(int argc, char** argv)
 {
    QApplication app(argc, argv);
 
-   app.setOrganizationName("xavierxeon");
-   app.setOrganizationDomain("schweinesystem.eu");
+   app.setOrganizationName("schweinesystem");
+   app.setOrganizationDomain("schweinesystem.ddns.net");
    app.setApplicationName("RenameInFilesAndFolders");
 
    MainWidget mw(nullptr);
