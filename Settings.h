@@ -8,6 +8,7 @@ class Settings
 public:
    Settings();
    ~Settings();
+
 public:
    void write(const QString& key, const QString& value);
    void write(const QString& key, const QStringList& value);
@@ -22,8 +23,10 @@ public:
    int integer(const QString& key) const;
    double real(const QString& key) const;
    bool boolean(const QString& key) const;
+
 private:
    const QString& fileName() const;
+
 private:
    static QJsonObject object;
    static quint32 useCount;
