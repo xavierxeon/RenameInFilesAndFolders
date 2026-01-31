@@ -32,7 +32,7 @@ set_standrard_release_output_path()
 
 qt_add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 use_precompiled_headers()
-set_application_icon(${CMAKE_CURRENT_SOURCE_DIR}/AppIcon/${PROJECT_NAME})
+set_application_icon(${CMAKE_CURRENT_SOURCE_DIR}/AppIcon)
 
 add_all_subdirs_files(${CMAKE_CURRENT_SOURCE_DIR})
 
